@@ -22,6 +22,7 @@ public class CajeroBean implements Serializable {
     private String value;
     private String text;
     private String base64;
+    private String prueba;
 
     public CajeroBean() {
         clientes = new ArrayList<>();
