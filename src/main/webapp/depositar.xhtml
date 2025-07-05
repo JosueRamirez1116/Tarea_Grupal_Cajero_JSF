@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+
+<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+   <h:head>
+      <title>Depósito</title>
+   </h:head>
+
+   <h:body>
+      <h:form>
+         <h2>Depósito</h2>
+
+         <h:outputLabel value="Cuenta:" />
+         <h:inputText value="#{cajero.cuenta}" pt:autocomplete="off" />
+         <br/>
+
+         <h:outputLabel value="PIN:" />
+         <h:inputSecret value="#{cajero.pin}" />
+         <br/>
+
+         <h:outputLabel value="Monto:" />
+         <h:inputText value="#{cajero.monto}" pt:autocomplete="off"/>
+
+         <br/>
+         <p:growl>
+            <p:autoUpdate />
+         </p:growl>
+
+         <p:outputPanel id="input">
+            <p:outputLabel for="@next" value="Firma:" style="font-size:1.5rem" styleClass="block mb-2" />
+            <p:signature id="signature" widgetVar="sig" style="width:400px;height:200px" value="#{cajero.value}" required="true" guideline="true"
+                         textValue="#{cajero.text}" base64Value="#{cajero.base64}" />
+         </p:outputPanel>
+
+         <div style="margin:20px 0">
+            <p:commandButton value="Depositar" icon="pi pi-check" action="#{cajero.depositar}"  />
+            <p:commandButton value="Borrar Firma" icon="pi pi-times" type="button" onclick="PF('sig').clear()" styleClass="ui-button-flat ml-2" />
+         </div>
+      </h:form>
+      <br/>
+      <h:link value="Volver al Menú" outcome="index.xhtml" />
+   </h:body>
+</f:view>
+</html>
+
+
