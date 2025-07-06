@@ -1,44 +1,52 @@
 <!DOCTYPE html>
-<html data-bs-theme="dark" xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
     <title>Consulta de Saldo</title>
+    <h:outputStylesheet name="themes/lara-dark-purple/theme.css" library="primefaces" />
 </h:head>
-<h:body style="font-family: Arial; padding: 20px;">
-    <h1>Consultar saldo</h1>
 
-    <h:form>
-        <h:panelGrid columns="2" cellpadding="5">
-            <h:outputLabel value="Número de cuenta:" />
-            <h:inputText value="#{cajero.cuenta}" pt:autocomplete="off"/>
+<h:body style="font-family: Arial; padding: 30px;">
+    <h:form id="formConsulta">
+        <p:panel header="🔍 Consulta de Saldo" styleClass="ui-panel-shadow" style="max-width: 500px; margin: auto;">
+            <p:messages id="msgs" closable="true" showDetail="true" />
 
-            <h:outputLabel value="PIN:" />
-            <h:inputSecret value="#{cajero.pin}" />
-        </h:panelGrid>
+            <p:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
 
-        <br/>
-        <p:growl>
-            <p:autoUpdate />
-        </p:growl>
+                <p:outputLabel for="cuenta" value="Número de cuenta:" />
+                <p:inputText id="cuenta"
+                             value="#{cajero.cuenta}"
+                             pt:placeholder="Ingrese su número"
+                             pt:autocomplete="off"
+                             required="true" requiredMessage="Ingrese una cuenta válida" />
 
-        <p:outputPanel id="input">
-            <p:outputLabel for="@next" value="Firma:" style="font-size:1.5rem" styleClass="block mb-2" />
-            <p:signature id="signature" widgetVar="sig" style="width:400px;height:200px" value="#{cajero.value}" required="true" guideline="true"
-                         textValue="#{cajero.text}" base64Value="#{cajero.base64}" />
-        </p:outputPanel>
+                <p:outputLabel for="pin" value="PIN:" />
+                <p:password id="pin"
+                            value="#{cajero.pin}"
+                            feedback="false"
+                            required="true" requiredMessage="El PIN es obligatorio" />
+            </p:panelGrid>
 
-        <div style="margin:20px 0">
-            <p:commandButton value="Consultar" icon="pi pi-check" action="#{cajero.consultar}"  />
-            <p:commandButton value="Borrar Firma" icon="pi pi-times" type="button" onclick="PF('sig').clear()" styleClass="ui-button-flat ml-2" />
-        </div>
+            <br/>
+
+            <p:commandButton value="Consultar"
+                             icon="pi pi-search"
+                             action="#{cajero.consultar}"
+                             update="formConsulta"
+                             styleClass="ui-button-success ui-button-raised"
+                             style="margin-right:10px;" />
+
+            <p:link outcome="index.xhtml" value="⬅ Volver al Menú" style="font-size: 1rem;" />
+
+            <br/><br/>
+
+            <p:outputPanel rendered="#{not empty cajero.mensaje}">
+                <p:outputLabel value="#{cajero.mensaje}" style="font-weight: bold; font-size: 1.2rem;" />
+            </p:outputPanel>
+        </p:panel>
     </h:form>
-
-    <br/>
-    <h:link value="Volver al Menú" outcome="index.xhtml" />
-    <br/>
-    <h:outputText value="#{cajero.mensaje}" rendered="#{not empty cajero.mensaje}" />
-
 </h:body>
 </html>

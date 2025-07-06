@@ -1,40 +1,82 @@
 <!DOCTYPE html>
 <html data-bs-theme="dark" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="jakarta.faces.core"
-      xmlns:pt="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:head>
-   <title>Retiro</title>
-</h:head>
-<h:body>
-   <h:form>
-      <h2>Retiro</h2>
-      <h:outputLabel value="Cuenta:" />
-      <h:inputText value="#{cajero.cuenta}" pt:autocomplete="off" />
-      <br/>
-      <h:outputLabel value="PIN:" />
-      <h:inputSecret value="#{cajero.pin}" />
-      <br/>
-      <h:outputLabel value="Monto:" />
-      <h:inputText value="#{cajero.monto}" pt:autocomplete="off"/>
-      <br/>
-      <p:growl>
-         <p:autoUpdate />
-      </p:growl>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-      <p:outputPanel id="input">
-         <p:outputLabel for="@next" value="Firma:" style="font-size:1.5rem" styleClass="block mb-2" />
-         <p:signature id="signature" widgetVar="sig" style="width:400px;height:200px" value="#{cajero.value}" required="true" guideline="true"
-                      textValue="#{cajero.text}" base64Value="#{cajero.base64}" />
-      </p:outputPanel>
+<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+   <h:head>
+      <title>Retiro</title>
+      <h:outputStylesheet name="themes/lara-dark-purple/theme.css" library="primefaces" />
+   </h:head>
 
-      <div style="margin:20px 0">
-         <p:commandButton value="Retirar" icon="pi pi-check" action="#{cajero.retirar}"  />
-         <p:commandButton value="Borrar Firma" icon="pi pi-times" type="button" onclick="PF('sig').clear()" styleClass="ui-button-flat ml-2" />
-      </div>
-   </h:form>
-   <br/>
-   <h:link value="Volver al Menú" outcome="index.xhtml" />
-</h:body>
+   <h:body style="font-family: Arial; padding: 30px;">
+      <h:form id="formRetiro">
+         <p:panel header="💸 Realizar Retiro"
+                  styleClass="ui-panel-shadow"
+                  style="max-width: 500px; margin: auto;">
+
+            <p:messages id="msgs" closable="true" showDetail="true" />
+
+            <p:panelGrid columns="2" columnClasses="label,value" cellpadding="10">
+
+               <p:outputLabel for="cuenta" value="Número de cuenta:" />
+               <p:inputText id="cuenta"
+                            value="#{cajero.cuenta}"
+                            pt:placeholder="Ingrese su número"
+                            pt:autocomplete="off"
+                            required="true"
+                            requiredMessage="Ingrese una cuenta válida" />
+
+               <p:outputLabel for="pin" value="PIN:" />
+               <p:password id="pin"
+                           value="#{cajero.pin}"
+                           feedback="false"
+                           required="true"
+                           requiredMessage="El PIN es obligatorio" />
+
+               <p:outputLabel for="monto" value="Monto a retirar:" />
+               <p:inputText id="monto"
+                            value="#{cajero.monto}"
+                            pt:placeholder="Ej: 500.00"
+                            pt:autocomplete="off"
+                            required="true"
+                            requiredMessage="Debe ingresar un monto válido" />
+            </p:panelGrid>
+
+            <br/>
+
+            <p:outputPanel id="firmaPanel">
+               <p:outputLabel for="signature" value="Firma del cliente:" style="font-size:1.2rem;" />
+               <p:signature id="signature"
+                            widgetVar="sig"
+                            style="width:400px;height:200px"
+                            value="#{cajero.value}"
+                            base64Value="#{cajero.base64}"
+                            guideline="true"
+                            required="true" />
+               <br/>
+               <p:commandButton value="Borrar Firma"
+                                icon="pi pi-times"
+                                type="button"
+                                onclick="PF('sig').clear();"
+                                styleClass="ui-button-flat ui-button-danger mt-2" />
+            </p:outputPanel>
+
+            <br/>
+
+            <p:commandButton value="Retirar"
+                             icon="pi pi-wallet"
+                             action="#{cajero.retirar}"
+                             update="formRetiro"
+                             styleClass="ui-button-raised ui-button-warning"
+                             style="margin-top:10px;" />
+            <p:link outcome="index.xhtml" value="⬅ Volver al Menú" style="font-size: 1rem;" />
+         </p:panel>
+
+
+      </h:form>
+   </h:body>
+</f:view>
 </html>

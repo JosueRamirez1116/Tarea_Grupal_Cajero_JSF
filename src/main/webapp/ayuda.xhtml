@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html data-bs-theme="dark" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-<h:head>
-    <title>Ayuda</title>
-</h:head>
-<h:body>
-    <h1>Ayuda</h1>
-    <p>Aplicativo: Cajero Automático JSF</p>
-    <p>Integrantes del grupo:</p>
-    <ul>
-        <li>Josue Ramirez - 202010010375</li>
-        <li>Wilmer Colindres - 201910020063</li>
-    </ul>
-    <p>Clase: Programación Web II</p>
-    <br/>
-    <h:link value="Volver al Menú" outcome="index.xhtml" />
-</h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<f:view>
+    <h:head>
+        <title>Ayuda</title>
+        <h:outputStylesheet name="themes/lara-dark-purple/theme.css" library="primefaces" />
+    </h:head>
+
+    <h:body style="font-family: Arial; padding: 30px; max-width: 600px; margin: auto;">
+        <p:card styleClass="ui-card-shadow" header="🆘 Ayuda - Cajero Automático JSF">
+
+            <h:panelGroup style="font-size:1.1rem; margin-bottom: 1rem;">
+                <p>📌 Aplicativo: <strong>Cajero Automático JSF</strong></p>
+                <p>📚 Clase: <strong>Programación Web II</strong></p>
+            </h:panelGroup>
+
+            <h:outputText value="👥 Integrantes del grupo:" style="font-weight:bold; font-size:1.1rem;" />
+            <ul style="margin-left: 20px; margin-top: 5px;">
+                <li>Josue Ramirez - 202010010375</li>
+                <li>Wilmer Colindres - 201910020063</li>
+            </ul>
+
+            <br/>
+
+            <p:button value="🏠 Volver al Menú" icon="pi pi-home" outcome="index.xhtml"
+                      styleClass="ui-button-primary" />
+        </p:card>
+    </h:body>
+</f:view>
 </html>

@@ -1,23 +1,57 @@
 <!DOCTYPE html>
 <html data-bs-theme="dark" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
-<h:head>
-   <title>Inicio - Cajero Automático</title>
-</h:head>
-<h:body style="text-align:center; font-family: Arial, sans-serif;">
-   <h1 style="color: darkblue;">Bienvenido al Cajero Automático</h1>
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-   <h:form>
-      <h:commandButton value="Consultar Saldo" action="consultar.xhtml" style="margin:10px; padding:10px;" />
-      <br/>
-      <h:commandButton value="Depositar" action="depositar.xhtml" style="margin:10px; padding:10px;" />
-      <br/>
-      <h:commandButton value="Retirar" action="retirar.xhtml" style="margin:10px; padding:10px;" />
-      <br/>
-      <h:commandButton value="Ayuda" action="ayuda.xhtml" style="margin:10px; padding:10px;" />
-   </h:form>
-</h:body>
+<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+   <h:head>
+      <title>Inicio - Cajero Automático</title>
+      <h:outputStylesheet name="themes/lara-dark-purple/theme.css" library="primefaces" />
+   </h:head>
+
+   <h:body style="font-family: 'Segoe UI', sans-serif; background-color: #1e1e2f; padding: 40px; text-align: center;">
+      <div style="display: flex; justify-content: center; margin-top: 80px;">
+
+         <p:card style="width: 100%; max-width: 600px; font-size: 1.4rem;"
+                 header="💳 Cajero Automático JSF">
+
+      <h:form>
+
+            <p style="font-size: 1.1rem; color: #ccc;">Seleccione una operación:</p>
+
+            <p:commandButton value="🔍 Consultar Saldo"
+                             action="#{cajero.irAConsulta}"
+                             icon="pi pi-search"
+                             styleClass="ui-button-secondary ui-button-raised mb-3"
+                             ajax="false"
+                             style="width: 100%; margin-bottom: 10px;" />
+
+            <p:commandButton value="💰 Depositar"
+                             action="depositar.xhtml?faces-redirect=true"
+                             icon="pi pi-wallet"
+                             styleClass="ui-button-success ui-button-raised mb-3"
+                             ajax="false"
+                             style="width: 100%; margin-bottom: 10px;" />
+
+            <p:commandButton value="💸 Retirar"
+                             action="retirar.xhtml?faces-redirect=true"
+                             icon="pi pi-money-bill"
+                             styleClass="ui-button-warning ui-button-raised mb-3"
+                             ajax="false"
+                             style="width: 100%; margin-bottom: 10px;" />
+
+            <p:commandButton value="❓ Ayuda"
+                             action="ayuda.xhtml?faces-redirect=true"
+                             icon="pi pi-question-circle"
+                             styleClass="ui-button-info ui-button-raised"
+                             ajax="false"
+                             style="width: 100%;" />
+
+         </h:form>
+      </p:card>
+      </div>
+   </h:body>
 </f:view>
 </html>

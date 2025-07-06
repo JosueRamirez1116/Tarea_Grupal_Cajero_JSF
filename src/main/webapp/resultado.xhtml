@@ -1,17 +1,51 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-<h:head>
-    <title>Resultado</title>
-</h:head>
-<h:body>
-    <h2>Resultado</h2>
-    <h:outputText value="#{cajero.mensaje}" />
-    <br/><br/>
-    <h:link value="Volver a Retiro" outcome="retirar.xhtml" />
-    <br/>
-    <h:link value="Volver a Depósito" outcome="depositar.xhtml" />
-    <br/>
-    <h:link value="Volver al Menú" outcome="index.xhtml" />
-</h:body>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html;charset=UTF-8" encoding="UTF-8">
+    <h:head>
+        <title>Resultado</title>
+        <h:outputStylesheet name="themes/lara-dark-purple/theme.css" library="primefaces" />
+    </h:head>
+
+    <h:body style="font-family: Arial; padding: 30px;">
+        <h:form>
+            <p:card style="max-width: 500px; margin: auto;">
+                <f:facet name="title">
+                    📢 Resultado de la Transacción
+                </f:facet>
+
+                <h:outputText value="#{cajero.mensaje}" style="font-size: 1.2rem; display:block; margin-bottom: 20px;" />
+
+                <p:separator />
+
+                <p:commandButton value="🔍 Volver a Consultar"
+                                 action="#{cajero.irAConsulta}"
+                                 icon="pi pi-search"
+                                 styleClass="ui-button-info ui-button-flat mb-2"
+                                 style="margin: 5px"
+                                 ajax="false" />
+
+                <p:button value="💸 Volver a Retiro"
+                          outcome="retirar.xhtml"
+                          styleClass="ui-button-warning ui-button-flat mb-2"
+                          icon="pi pi-minus"
+                          style="margin: 5px" />
+
+                <p:button value="💰 Volver a Depósito"
+                          outcome="depositar.xhtml"
+                          styleClass="ui-button-success ui-button-flat mb-2"
+                          icon="pi pi-plus"
+                          style="margin: 5px" />
+
+                <p:button value="🏠 Menú Principal"
+                          outcome="index.xhtml"
+                          styleClass="ui-button-secondary ui-button-flat"
+                          icon="pi pi-home"
+                          style="margin: 5px" />
+            </p:card>
+        </h:form>
+    </h:body>
+</f:view>
 </html>

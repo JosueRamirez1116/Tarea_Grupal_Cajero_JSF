@@ -16,13 +16,12 @@ public class CajeroBean implements Serializable {
     private List<Cliente> clientes;
     private String cuenta="";
     private String pin="";
-    private double monto;
+    private Double  monto;
     private String mensaje="";
-    private double nuevoSaldo=0.0;
+    private Double nuevoSaldo;
     private String value;
     private String text;
     private String base64;
-    private String prueba;
 
     public CajeroBean() {
         clientes = new ArrayList<>();
@@ -33,30 +32,22 @@ public class CajeroBean implements Serializable {
         clientes.add(new Cliente("1005", "3333", 500,"Jose Deras"));
     }
 
-    public String consultar() {
-        Cliente c = buscarCliente();
-        if (c == null || !c.getPin().equals(pin)) {
-            mensaje = "Cuenta o PIN incorrecto.";
-        } else {
-            mensaje = "Bienvenido " + c.getNombre() + ", su saldo es: L " + c.getSaldo();
-        }
-        cuenta = "";
-        pin = "";
-        text="";
-        value="";
-        base64="";
-        mensaje="";
-        return null; // quedarse en la misma página
+    public String irAConsulta() {
+        mensaje = null;
+        cuenta = null;
+        pin = null;
+        return "consultar.xhtml?faces-redirect=true";
     }
 
 
     public String retirar() {
+        this.mensaje = null;
         Cliente c = buscarCliente();
         if (c == null || !c.getPin().equals(pin)) {
             mensaje = "PIN o cuenta incorrecta.";
             return "resultado";
         }
-        if (monto <= 0) {
+        if (monto == null || monto <= 0) {
             mensaje = "El monto debe ser mayor que cero.";
             return "resultado";
         }
@@ -68,39 +59,60 @@ public class CajeroBean implements Serializable {
         nuevoSaldo = c.getSaldo();
         mensaje = "Retiro exitoso. Nuevo saldo: L " + nuevoSaldo;
         cuenta = "";
+        monto = null;
         pin = "";
-        monto = 0;
         text="";
         value="";
         base64="";
-        mensaje="";
+
         return "resultado";
     }
 
-    public String depositar() {
-        Cliente c = buscarCliente();
-        if (c == null || !c.getPin().equals(pin)) {
-            mensaje = "PIN o cuenta incorrecta.";
-            return "resultado";
+    public void consultar() {
+        mensaje="";
+        Cliente cliente = buscarCliente(); // tu lógica
+        if (cliente != null && cliente.getPin().equals(pin)) {
+            mensaje = "Saldo disponible: L " + cliente.getSaldo();
+        } else {
+            mensaje = "❌ Cuenta o PIN incorrectos.";
         }
-        if (monto <= 0) {
-            mensaje = "El monto debe ser mayor que cero.";
-            return "resultado";
-        }
-        c.setSaldo(c.getSaldo() + monto);
-        nuevoSaldo = c.getSaldo();
-        mensaje = "Depósito exitoso. Nuevo saldo: L " + nuevoSaldo;
+
         cuenta = "";
         pin = "";
-        monto = 0;
-        text="";
-        value="";
-        base64="";
-        mensaje="";
+    }
+
+
+    public String depositar() {
+        this.mensaje = null;
+        Cliente c = buscarCliente();
+
+        if (c == null || !c.getPin().equals(pin)) {
+            mensaje = "❌ PIN o cuenta incorrecta.";
+            return "resultado";
+        }
+
+        if (monto == null || monto <= 0) {
+            mensaje = "❌ El monto debe ser mayor que cero.";
+            return "resultado";
+        }
+
+        c.setSaldo(c.getSaldo() + monto);
+        nuevoSaldo = c.getSaldo();
+        mensaje = "✅ Depósito realizado con éxito. Nuevo saldo: L " + nuevoSaldo;
+
+        cuenta = "";
+        monto = null;
+        pin = "";
+        text = "";
+        value = "";
+        base64 = "";
+
         return "resultado";
     }
 
+
     private Cliente buscarCliente() {
+        this.mensaje=null;
         for (Cliente c : clientes) {
             if (c.getNumeroCuenta().equals(cuenta)) return c;
         }
@@ -125,11 +137,11 @@ public class CajeroBean implements Serializable {
         this.pin = pin;
     }
 
-    public double getMonto() {
+    public Double  getMonto() {
         return monto;
     }
 
-    public void setMonto(double monto) {
+    public void setMonto(Double monto) {
         this.monto = monto;
     }
 
@@ -141,11 +153,11 @@ public class CajeroBean implements Serializable {
         this.mensaje = mensaje;
     }
 
-    public double getNuevoSaldo() {
+    public Double getNuevoSaldo() {
         return nuevoSaldo;
     }
 
-    public void setNuevoSaldo(double nuevoSaldo) {
+    public void setNuevoSaldo(Double nuevoSaldo) {
         this.nuevoSaldo = nuevoSaldo;
     }
 
