@@ -25,11 +25,11 @@ public class CajeroBean implements Serializable {
 
     public CajeroBean() {
         clientes = new ArrayList<>();
-        clientes.add(new Cliente("1001", "1234", 1000, "Ana García"));
-        clientes.add(new Cliente("1002", "5678", 1500,"Julio Lopez"));
-        clientes.add(new Cliente("1003", "1111", 200,"Diana Pavon"));
-        clientes.add(new Cliente("1004", "2222", 3500,"Saul Guardado"));
-        clientes.add(new Cliente("1005", "3333", 500,"Jose Deras"));
+        clientes.add(new Cliente("753100001", "1234", 1000,"Ana García"));
+        clientes.add(new Cliente("753100002", "9876", 15000,"Julio Lopez"));
+        clientes.add(new Cliente("753100003", "4321", 200,"Diana Pavon"));
+        clientes.add(new Cliente("753100004", "6789", 35000,"Saul Guardado"));
+        clientes.add(new Cliente("753100005", "0000", 150000,"Jose Deras"));
     }
 
     public String irAConsulta() {
